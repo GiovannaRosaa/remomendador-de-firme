@@ -1,0 +1,128 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recomendador de Filmes</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #d1d1f7;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    .input-group {
+      margin: 10px 0;
+    }
+    .recomendacao {
+      font-size: 32px;
+      font-weight: bold;
+      color: #3b0457;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2>Recomendador de Filmes</h2>
+  <div class="input-group">
+    <label for="idade">Sua idade:</label>
+    <input type="number" id="idade" placeholder="Digite sua idade" />
+  </div>
+  <div class="input-group">
+    <label><input type="checkbox" id="fantasia"> Gosta de fantasia?</label>
+  </div>
+  <div class="input-group">
+    <label><input type="checkbox" id="aventura"> Gosta de aventura?</label>
+  </div>
+  <div class="input-group">
+    <label><input type="checkbox" id="terror"> Gosta de terror?</label>
+  </div>
+ 
+  <div class="recomendacao" id="resultado">Por favor, insira sua idade!</div>
+
+  <script>
+    // Função chamada para atualizar a recomendação sempre que o usuário mudar as informações
+    function updateRecommendation() {
+      let idade = document.getElementById("idade").value;
+      idade = idade === "" ? 0 : parseInt(idade);
+     
+      let gostaDeFantasia = document.getElementById("fantasia").checked;
+      let gostaDeAventura = document.getElementById("aventura").checked;
+      let gostaDeTerror = document.getElementById("terror").checked;
+
+      let recomendacao = geraRecomendacao(idade, gostaDeFantasia, gostaDeAventura, gostaDeTerror);
+      document.getElementById("resultado").textContent = recomendacao;
+    }
+
+    // Função de recomendação
+    function geraRecomendacao(idade, gostaDeFantasia, gostaDeAventura, gostaDeTerror) {
+      if (idade === 0) {
+        return "Por favor, insira sua idade!";
+      }
+
+      if (idade < 10) {
+        // Para crianças menores de 10 anos
+        if (gostaDeTerror) {
+          return "Coraline"; // Filme de terror apropriado para crianças
+        } else if (gostaDeFantasia) {
+          return "Planeta do Tesouro"; // Filme de fantasia
+        } else if (gostaDeAventura) {
+          return "O Rei Leão"; // Filme de aventura
+        } else {
+          return "Toy Story"; // Filme neutro
+        }
+      } else if (idade >= 10 && idade < 14) {
+        // Para idades entre 10 e 13
+        if (gostaDeTerror) {
+          return "A Noiva Cadáver"; // Filme de terror leve para essa faixa etária
+        } else if (gostaDeFantasia) {
+          return "Harry Potter e a Pedra Filosofal"; // Fantasia
+        } else if (gostaDeAventura) {
+          return "Percy Jackson e o Ladrão de Raios"; // Aventura
+        } else {
+          return "Wall-E"; // Filme neutro, não ligado a nenhum gênero específico
+        }
+      } else if (idade >= 14 && idade < 18) {
+        // Para idades entre 14 e 17
+        if (gostaDeTerror) {
+          return "O Chamado"; // Filme de terror mais adulto
+        } else if (gostaDeFantasia) {
+          return "O Senhor dos Anéis: A Sociedade do Anel"; // Fantasia épica
+        } else if (gostaDeAventura) {
+          return "Indiana Jones: Os Caçadores da Arca Perdida"; // Aventura clássica
+        } else {
+          return "Sexto Sentido"; // Filme de ficção científica, algo mais adulto
+        }
+      } else {
+        // Para maiores de 18 anos
+        if (gostaDeTerror) {
+          return "Corra!"; // Terror psicológico para maiores
+        } else if (gostaDeFantasia) {
+          return "O Hobbit"; // Fantasia épica para adultos
+        } else if (gostaDeAventura) {
+          return "Mad Max: Estrada da Fúria"; // Aventura pós-apocalíptica
+        } else {
+          return "Shazam!"; // Filme mais adulto e filosófico
+        }
+      }
+    }
+
+    // Adiciona evento para detectar mudança nos inputs
+    document.getElementById("idade").addEventListener("input", updateRecommendation);
+    document.getElementById("fantasia").addEventListener("change", updateRecommendation);
+    document.getElementById("aventura").addEventListener("change", updateRecommendation);
+    document.getElementById("terror").addEventListener("change", updateRecommendation);
+  </script>
+</body>
+</html>
+
